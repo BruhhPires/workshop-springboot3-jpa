@@ -1,12 +1,15 @@
 package com.educandoweb.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity													// @Entity É UTILIZADO PARA INFORMAR QUE A CLASSE TAMBÉM É UMA ENTIDADE
@@ -22,6 +25,9 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
+	
+	@OneToMany(mappedBy = "client")				    	// ANOTATION QUE DIZ QUE ESSA RELAÇÃO É "UM PRA MUITOS" E O NOME DO ATRIBUTO QUE TEM NA ASSOCIAÇÃO NO ORDER
+	private List<Order> orders = new ArrayList<>();     // CLIENTE TEM VARIOS PEDIDOS OU "UM PRA MUITOS"
 	
 	public User() {
 	}
@@ -74,12 +80,15 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -91,5 +100,4 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }
