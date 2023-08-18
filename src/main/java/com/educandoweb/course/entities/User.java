@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	@JsonIgnore                                         // EVITA O LOOPING PELAS RELAÇÕES  E PERMITE QUE AO BUSCAR O ORDER TRAGA OS IDS ASSOCIADOS AO PEDIDO(ORDER)
 	@OneToMany(mappedBy = "client")				    	// ANOTATION QUE DIZ QUE ESSA RELAÇÃO É "UM PRA MUITOS" E O NOME DO ATRIBUTO QUE TEM NA ASSOCIAÇÃO NO ORDER
 	private List<Order> orders = new ArrayList<>();     // CLIENTE TEM VARIOS PEDIDOS OU "UM PRA MUITOS"
 	

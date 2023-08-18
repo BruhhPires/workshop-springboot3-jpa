@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +22,7 @@ public class Order implements Serializable{
 	@Id                                                   // GARANTE QUE O ID SEJA A CHAVE PRIMARIA
 	@GeneratedValue(strategy = GenerationType.IDENTITY)   // GARANTE QUE A CHAVE SEJA AUTOINCREMENTAVEL
 	private Long id;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd'T'HH:mm:ss'Z'", timezone = "GMT") // FORMATO DO INSTANT
 	private Instant moment;
 
 	@ManyToOne											  //ANOTATION QUE DIZ QUE ESSA RELAÇÃO É "MUITOS PRA UM"
