@@ -5,12 +5,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_category")
@@ -23,7 +25,8 @@ public class Category implements Serializable{
 	private Long id;
 	private String name;
 	
-	@Transient
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 		
 	public Category() {
@@ -51,7 +54,7 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 	
-	public Set<Product> getProducties() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 
@@ -71,14 +74,5 @@ public class Category implements Serializable{
 		Category other = (Category) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
 
 }
