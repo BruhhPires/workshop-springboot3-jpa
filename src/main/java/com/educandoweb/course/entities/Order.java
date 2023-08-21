@@ -40,7 +40,7 @@ public class Order implements Serializable{
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // NO ONETOONE, É NECESSARIO COLOCAR O CASCADE PRA MAPEAR O MESMO ID NOS 2
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // NO ONETOONE, É NECESSARIO COLOCAR O CASCADE PARA TER O MESMO ID PAGAMENTO E PEDIDO
 	private Payment payment;
 	
 	public Order() {
@@ -103,6 +103,14 @@ public class Order implements Serializable{
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+	
+	public double getTotal() {
+		double sum = 0.0;
+		for(OrderItem x: items) {
+			sum += x.getSubTotal();
+		}
+		return sum;
 	}
 
 	@Override
